@@ -1,0 +1,27 @@
+name: rtg-deploy-prod
+
+# on: 
+#   push: 
+#     branches: [master]
+
+jobs:
+  serverless-deploy:
+  runs-on: ubuntu-latest
+
+  env:
+  AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+			DOMAIN: ${{secrets.PROD_DOMAIN}}
+			SUB_DOMAIN: ${{secrets.PROD_SUB_DOMAIN}}
+
+      - name: Install dependencies
+        run: yarn
+
+      # - name: Download `.serverless` state from S3
+      #   run: aws s3 sync s3://my-bucket/my-repo-name/env-name/.serverless .serverless --delete
+
+      - name: Deploy to AWS
+        run: yarn deploy:prod
+
+      # - name: Upload `.serverless` state to S3
+      #   run: aws s3 sync .serverless s3://my-bucket/my-repo-name/env-name/.serverless --delete
