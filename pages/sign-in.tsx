@@ -9,10 +9,12 @@ const SignIn: NextPage = () => {
   const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
   };
+
   const signIn = async () => {
     if (!email) return;
     const { user, error } = await supabase.auth.signIn({ email });
 
+    console.log({ user });
     if (error) {
       console.log({ error });
     } else {
